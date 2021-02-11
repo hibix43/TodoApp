@@ -15,6 +15,10 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader'
+      },
+      {
+        test: /\.(ico|svg|jpg|png|webp)$/,
+        type: 'asset/inline'
       }
     ]
   },

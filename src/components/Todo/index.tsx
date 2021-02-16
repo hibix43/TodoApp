@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { StyledProps } from './../../types';
-import Button from '../Button/Button';
+import Button from '../Button';
 
 type Props = {
   check: boolean;

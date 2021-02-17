@@ -6,7 +6,7 @@ interface Props {
 
 const Button = styled.button<Props>`
   font-size: 1rem;
-  padding: 1rem;
+  padding: 1.2rem;
   background-color: transparent;
   background-image: url(${(props) => props.imgUrl || ''});
   background-repeat: no-repeat;

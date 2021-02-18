@@ -38,20 +38,19 @@ const Component: React.VFC<Props & StyledProps> = ({
 
 const StyledComponent = styled(Component)`
   display: flex;
-  flex-direction: row;
-  * {
-    vertical-align: middle;
-  }
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
   &__check,
   &__edit {
-    margin-right: 16px;
+    margin-right: 0.5rem;
   }
   &__title {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
   &__edit {
     margin-left: auto;
   }
 `;
 
-export const Todo = StyledComponent;
+export const TodoItem = StyledComponent;

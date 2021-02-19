@@ -40,6 +40,7 @@ const StyledComponent = styled(Component)`
   display: flex;
   align-items: center;
   padding: 0.5rem;
+  color: #333;
   border-bottom: 1px solid #ddd;
   &__check,
   &__edit {

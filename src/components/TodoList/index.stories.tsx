@@ -5,7 +5,7 @@ export default {
   title: 'TodoList'
 };
 
-export const Unchecked: React.VFC = () => (
+export const Normal: React.VFC = () => (
   <TodoList
     todos={[
       { id: '1', title: 'Checked todo', checked: false },

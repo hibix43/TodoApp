@@ -15,6 +15,7 @@ const Component: React.VFC<Props> = ({ className, children }) => {
 const Button = styled(Component)`
   font-size: 1rem;
   padding: 1rem;
+  color: #333;
   background-color: transparent;
   background-image: url(${(props) => props.imgUrl || ''});
   background-repeat: no-repeat;

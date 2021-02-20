@@ -30,10 +30,11 @@ const Component: React.VFC<Props> = ({
 
 const StyledComponent = styled(Component)`
   display: flex;
-  width: 100%;
+  width: 50%;
   background-color: #eee;
   button {
     width: 100%;
+    font-weight: bold;
   }
   &__selected {
     color: #fff;

@@ -48,6 +48,7 @@ const StyledComponent = styled(Component)`
   }
   &__title {
     font-size: 1rem;
+    font-weight: bold;
   }
   &__edit {
     margin-left: auto;

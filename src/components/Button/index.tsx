@@ -1,14 +1,14 @@
 import { Children } from 'react';
 import React from 'react';
 import styled from 'styled-components';
+import { StyledProps } from '../../types';
 
 interface Props {
-  className?: string;
   children?: React.ReactNode;
   imgUrl?: string;
 }
 
-const Component: React.VFC<Props> = ({ className, children }) => {
+const Component: React.VFC<Props & StyledProps> = ({ className, children }) => {
   return <button className={className}>{children}</button>;
 };
 

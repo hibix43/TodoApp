@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledProps } from '../../types';
 
 type Props = {
-  className?: string;
   children: React.ReactNode;
 };
 
-const Component: React.VFC<Props> = ({ className, children }) => {
+const Component: React.VFC<Props & StyledProps> = ({ className, children }) => {
   return <div className={className}>{children}</div>;
 };
 

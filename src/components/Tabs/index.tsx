@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledProps } from '../../types';
 import { TabContent } from '../TabContent';
 import { TabNavigation } from '../TabNavigation';
 
@@ -10,12 +11,15 @@ type TabContent = {
 };
 
 type Props = {
-  className?: string;
   content: TabContent;
   tabTitltes: string[];
 };
 
-const Component: React.VFC<Props> = ({ className, content, tabTitltes }) => {
+const Component: React.VFC<Props & StyledProps> = ({
+  className,
+  content,
+  tabTitltes
+}) => {
   return (
     <div className={className}>
       <TabNavigation selectedTabTitle={content.title} tabTitles={tabTitltes} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledProps } from '../../types';
 import Input from '../Input';
 import { Tabs } from '../Tabs';
 import { TodoList } from '../TodoList';
@@ -24,12 +25,8 @@ const TAB_CONTENTS = [
   }
 ];
 
-type Props = {
-  className?: string;
-};
-
 // 本来なら Props や store で管理されるが今はやらない
-const Component: React.VFC<Props> = ({ className }) => {
+const Component: React.VFC<StyledProps> = ({ className }) => {
   return (
     <div className={className}>
       <div className={`${className}__inner`}>

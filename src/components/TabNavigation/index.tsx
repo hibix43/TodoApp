@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledProps } from '../../types';
 import Button from '../Button';
 
 type Props = {
-  className?: string;
   selectedTabTitle: string;
   tabTitles: string[];
 };
 
-const Component: React.VFC<Props> = ({
+const Component: React.VFC<Props & StyledProps> = ({
   className,
   selectedTabTitle,
   tabTitles

@@ -1,13 +1,12 @@
 import React from 'react';
-import { Todo } from '../../types';
+import { StyledProps, Todo } from '../../types';
 import { TodoItem } from '../TodoItem';
 
 type Props = {
-  className?: string;
   todos: Todo[];
 };
 
-const Component: React.VFC<Props> = ({ className, todos }) => {
+const Component: React.VFC<Props & StyledProps> = ({ className, todos }) => {
   return (
     <div className={className}>
       {todos.map((todo) => (

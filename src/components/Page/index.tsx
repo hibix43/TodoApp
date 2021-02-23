@@ -61,4 +61,6 @@ const StyledComponent = styled(Component)`
   }
 `;
 
+// TODO: Container で todoSlice.todos と tabSlice.currentIndex から TodoList, TabContent を作成する
+
 export const Page = StyledComponent;

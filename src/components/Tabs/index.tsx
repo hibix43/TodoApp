@@ -1,17 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledProps } from '../../types';
+import { StyledProps, TabContent as TabContentType } from '../../types';
 import { TabContent } from '../TabContent';
 import { TabNavigation } from '../TabNavigation';
 
-type TabContent = {
-  id: number;
-  title: string;
-  content: React.ReactNode;
-};
-
 type Props = {
-  content: TabContent;
+  content: TabContentType;
   tabTitltes: string[];
 };
 
@@ -35,7 +29,7 @@ const StyledComponent = styled(Component)`
 
 type OuterProps = {
   selectedTabId: number; // TODO: tab をクリックすることで切り替えられるように id を state に持つ
-  contents: TabContent[];
+  contents: TabContentType[];
 };
 
 const Container: React.VFC<OuterProps> = ({ selectedTabId, contents }) => {

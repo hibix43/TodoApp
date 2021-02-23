@@ -7,3 +7,9 @@ export type Todo = {
   title: string;
   checked: boolean;
 };
+
+export type TabContent = {
+  id: number;
+  title: string;
+  content: React.ReactNode;
+};

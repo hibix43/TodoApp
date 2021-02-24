@@ -7,6 +7,7 @@ type Props = {
 };
 
 const Component: React.VFC<Props & StyledProps> = ({ className, todos }) => {
+  // TODO: todos が empty であることを示す
   return (
     <div className={className}>
       {todos.map((todo) => (

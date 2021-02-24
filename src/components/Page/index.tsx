@@ -1,32 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { StyledProps } from '../../types';
+import { RootState } from '../../store';
+import { StyledProps, TabContent, Todo } from '../../types';
 import Input from '../Input';
 import { Tabs } from '../Tabs';
 import { TodoList } from '../TodoList';
 
-// 仮データ
-const TODOS = [
-  { id: '0', title: 'Todo0', checked: false },
-  { id: '1', title: 'Todo1', checked: false },
-  { id: '2', title: 'Todo2', checked: true }
-];
-const TAB_CONTENTS = [
-  { id: 0, title: 'All', content: <TodoList todos={TODOS} /> },
-  {
-    id: 1,
-    title: 'Unchecked Todo',
-    content: <TodoList todos={TODOS.filter((todo) => !todo.checked)} />
-  },
-  {
-    id: 2,
-    title: 'Checked Todo',
-    content: <TodoList todos={TODOS.filter((todo) => todo.checked)} />
-  }
-];
+type Props = {
+  tabIndex: number;
+  contents: TabContent[];
+};
 
-// 本来なら Props や store で管理されるが今はやらない
-const Component: React.VFC<StyledProps> = ({ className }) => {
+const Component: React.VFC<Props & StyledProps> = ({
+  className,
+  tabIndex,
+  contents
+}) => {
   return (
     <div className={className}>
       <div className={`${className}__inner`}>
@@ -34,7 +24,7 @@ const Component: React.VFC<StyledProps> = ({ className }) => {
         <label>
           <Input type="text" placeholder="new todo title" />
         </label>
-        <Tabs selectedTabId={1} contents={TAB_CONTENTS} />
+        <Tabs selectedTabId={tabIndex} contents={contents} />
       </div>
     </div>
   );
@@ -61,6 +51,25 @@ const StyledComponent = styled(Component)`
   }
 `;
 
-// TODO: Container で todoSlice.todos と tabSlice.currentIndex から TodoList, TabContent を作成する
+const Container: React.VFC = () => {
+  const todos = useSelector<RootState, Todo[]>((state) => state.todo.todos);
+  const tabIndex = useSelector<RootState, number>(
+    (state) => state.tab.currentIndex
+  );
+  const tabContents = [
+    { id: 0, title: 'All', content: <TodoList todos={todos} /> },
+    {
+      id: 1,
+      title: 'Unchecked Todo',
+      content: <TodoList todos={todos.filter((todo) => !todo.checked)} />
+    },
+    {
+      id: 2,
+      title: 'Checked Todo',
+      content: <TodoList todos={todos.filter((todo) => todo.checked)} />
+    }
+  ];
+  return <StyledComponent tabIndex={tabIndex} contents={tabContents} />;
+};
 
-export const Page = StyledComponent;
+export const Page = Container;

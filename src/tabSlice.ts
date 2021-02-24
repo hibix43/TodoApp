@@ -17,3 +17,6 @@ const slice = createSlice({
     }
   }
 });
+
+export const { changeTab } = slice.actions;
+export const tabReducer = slice.reducer;

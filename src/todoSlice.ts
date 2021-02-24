@@ -25,3 +25,6 @@ const slice = createSlice({
     }
   }
 });
+
+export const { addTodo, changeChecked } = slice.actions;
+export const todoReducer = slice.reducer;

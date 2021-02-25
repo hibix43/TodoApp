@@ -1,7 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../../store';
+import { addTodo } from '../../todoSlice';
 import { StyledProps, TabContent, Todo } from '../../types';
 import Input from '../Input';
 import { Tabs } from '../Tabs';
@@ -10,19 +11,31 @@ import { TodoList } from '../TodoList';
 type Props = {
   tabIndex: number;
   contents: TabContent[];
+  inputValue: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onEnterKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 const Component: React.VFC<Props & StyledProps> = ({
   className,
   tabIndex,
-  contents
+  contents,
+  inputValue,
+  onChange,
+  onEnterKeyPress
 }) => {
   return (
     <div className={className}>
       <div className={`${className}__inner`}>
         <h1>Todo App</h1>
         <label>
-          <Input type="text" placeholder="new todo title" />
+          <Input
+            type="text"
+            placeholder="new todo title"
+            value={inputValue}
+            onChange={onChange}
+            onKeyPress={onEnterKeyPress}
+          />
         </label>
         <Tabs selectedTabId={tabIndex} contents={contents} />
       </div>
@@ -52,6 +65,8 @@ const StyledComponent = styled(Component)`
 `;
 
 const Container: React.VFC = () => {
+  const dispatch = useDispatch();
+  const [newTodoTitle, setNewTodoTitle] = useState('');
   const todos = useSelector<RootState, Todo[]>((state) => state.todo.todos);
   const tabIndex = useSelector<RootState, number>(
     (state) => state.tab.currentIndex
@@ -69,7 +84,24 @@ const Container: React.VFC = () => {
       content: <TodoList todos={todos.filter((todo) => todo.checked)} />
     }
   ];
-  return <StyledComponent tabIndex={tabIndex} contents={tabContents} />;
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodoTitle(e.target.value);
+  };
+  const onEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(addTodo(newTodoTitle));
+      setNewTodoTitle('');
+    }
+  };
+  return (
+    <StyledComponent
+      tabIndex={tabIndex}
+      contents={tabContents}
+      inputValue={newTodoTitle}
+      onChange={onChange}
+      onEnterKeyPress={onEnterKeyPress}
+    />
+  );
 };
 
 export const Page = Container;

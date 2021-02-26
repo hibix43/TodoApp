@@ -6,10 +6,19 @@ import { StyledProps } from '../../types';
 interface Props {
   children?: React.ReactNode;
   imgUrl?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Component: React.VFC<Props & StyledProps> = ({ className, children }) => {
-  return <button className={className}>{children}</button>;
+const Component: React.VFC<Props & StyledProps> = ({
+  className,
+  children,
+  onClick
+}) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 const Button = styled(Component)`

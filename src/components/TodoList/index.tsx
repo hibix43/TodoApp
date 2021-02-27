@@ -11,7 +11,12 @@ const Component: React.VFC<Props & StyledProps> = ({ className, todos }) => {
   return (
     <div className={className}>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} title={todo.title} check={todo.checked} />
+        <TodoItem
+          key={todo.id}
+          id={todo.id}
+          title={todo.title}
+          check={todo.checked}
+        />
       ))}
     </div>
   );

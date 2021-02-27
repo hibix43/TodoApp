@@ -68,6 +68,8 @@ const Container: React.VFC = () => {
   const dispatch = useDispatch();
   const [newTodoTitle, setNewTodoTitle] = useState('');
   const todos = useSelector<RootState, Todo[]>((state) => state.todo.todos);
+
+  // <Tabs/> と一緒に TodoListTabs? に切り出したほうがよさそう
   const tabIndex = useSelector<RootState, number>(
     (state) => state.tab.currentIndex
   );
@@ -84,6 +86,7 @@ const Container: React.VFC = () => {
       content: <TodoList todos={todos.filter((todo) => todo.checked)} />
     }
   ];
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodoTitle(e.target.value);
   };

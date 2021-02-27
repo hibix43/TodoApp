@@ -19,7 +19,7 @@ const slice = createSlice({
     },
     changeChecked: (state: State, action: PayloadAction<string>) => {
       const targetTodo = state.todos.find((todo) => todo.id === action.payload);
-      if (targetTodo) {
+      if (targetTodo && !targetTodo.checked) {
         targetTodo.checked = true;
       }
     }

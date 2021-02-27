@@ -2,28 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import { StyledProps } from './../../types';
 import Button from '../Button';
+import { changeChecked } from '../../todoSlice';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   check: boolean;
   title: string;
+  onClick: React.MouseEventHandler<HTMLSpanElement>;
 };
 
 const Component: React.VFC<Props & StyledProps> = ({
   className,
   check,
-  title
+  title,
+  onClick
 }) => {
   return (
+    // clsx で checked と unchecked のどちらかを付与する？
     <div className={`${className}`}>
-      <Button
-        className={`${className}__check`}
-        imgUrl={
-          check
-            ? './assets/images/checked.svg'
-            : './assets/images/unchecked.svg'
-        }
-      />
-      <span className={`${className}__title`}>{title}</span>
+      <span className={`${className}__main`} onClick={onClick}>
+        <Button
+          className={`${className}__check`}
+          imgUrl={
+            check
+              ? './assets/images/checked.svg'
+              : './assets/images/unchecked.svg'
+          }
+        />
+        <span className={`${className}__title`}>{title}</span>
+      </span>
       <Button
         className={`${className}__edit`}
         imgUrl={'./assets/images/edit.svg'}
@@ -49,10 +56,27 @@ const StyledComponent = styled(Component)`
   &__title {
     font-size: 1rem;
     font-weight: bold;
+    word-break: break-all;
   }
   &__edit {
     margin-left: auto;
   }
+  &__main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-right: 8px;
+  }
 `;
 
-export const TodoItem = StyledComponent;
+type OwterProps = Omit<Props, 'onClick'> & {
+  id: string;
+};
+
+const Container: React.VFC<OwterProps> = ({ id, check, title }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => dispatch(changeChecked(id));
+  return <StyledComponent check={check} title={title} onClick={handleClick} />;
+};
+
+export const TodoItem = Container;

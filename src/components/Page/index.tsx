@@ -28,15 +28,13 @@ const Component: React.VFC<Props & StyledProps> = ({
     <div className={className}>
       <div className={`${className}__inner`}>
         <h1>Todo App</h1>
-        <label>
-          <Input
-            type="text"
-            placeholder="new todo title"
-            value={inputValue}
-            onChange={onChange}
-            onKeyPress={onEnterKeyPress}
-          />
-        </label>
+        <Input
+          type="text"
+          placeholder="new todo title"
+          value={inputValue}
+          onChange={onChange}
+          onKeyPress={onEnterKeyPress}
+        />
         <Tabs selectedTabId={tabIndex} contents={contents} />
       </div>
     </div>

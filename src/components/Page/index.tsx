@@ -1,40 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { StyledProps } from '../../types';
+import { RootState } from '../../store';
+import { addTodo } from '../../todoSlice';
+import { StyledProps, TabContent, Todo } from '../../types';
 import Input from '../Input';
 import { Tabs } from '../Tabs';
 import { TodoList } from '../TodoList';
 
-// 仮データ
-const TODOS = [
-  { id: '0', title: 'Todo0', checked: false },
-  { id: '1', title: 'Todo1', checked: false },
-  { id: '2', title: 'Todo2', checked: true }
-];
-const TAB_CONTENTS = [
-  { id: 0, title: 'All', content: <TodoList todos={TODOS} /> },
-  {
-    id: 1,
-    title: 'Unchecked Todo',
-    content: <TodoList todos={TODOS.filter((todo) => !todo.checked)} />
-  },
-  {
-    id: 2,
-    title: 'Checked Todo',
-    content: <TodoList todos={TODOS.filter((todo) => todo.checked)} />
-  }
-];
+type Props = {
+  tabIndex: number;
+  contents: TabContent[];
+  inputValue: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onEnterKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
+};
 
-// 本来なら Props や store で管理されるが今はやらない
-const Component: React.VFC<StyledProps> = ({ className }) => {
+const Component: React.VFC<Props & StyledProps> = ({
+  className,
+  tabIndex,
+  contents,
+  inputValue,
+  onChange,
+  onEnterKeyPress
+}) => {
   return (
     <div className={className}>
       <div className={`${className}__inner`}>
         <h1>Todo App</h1>
-        <label>
-          <Input type="text" placeholder="new todo title" />
-        </label>
-        <Tabs selectedTabId={1} contents={TAB_CONTENTS} />
+        <Input
+          type="text"
+          placeholder="new todo title"
+          value={inputValue}
+          onChange={onChange}
+          onKeyPress={onEnterKeyPress}
+        />
+        <Tabs selectedTabId={tabIndex} contents={contents} />
       </div>
     </div>
   );
@@ -61,4 +62,47 @@ const StyledComponent = styled(Component)`
   }
 `;
 
-export const Page = StyledComponent;
+const Container: React.VFC = () => {
+  const dispatch = useDispatch();
+  const [newTodoTitle, setNewTodoTitle] = useState('');
+  const todos = useSelector<RootState, Todo[]>((state) => state.todo.todos);
+
+  // <Tabs/> と一緒に TodoListTabs? に切り出したほうがよさそう
+  const tabIndex = useSelector<RootState, number>(
+    (state) => state.tab.currentIndex
+  );
+  const tabContents = [
+    { id: 0, title: 'All', content: <TodoList todos={todos} /> },
+    {
+      id: 1,
+      title: 'Unchecked Todo',
+      content: <TodoList todos={todos.filter((todo) => !todo.checked)} />
+    },
+    {
+      id: 2,
+      title: 'Checked Todo',
+      content: <TodoList todos={todos.filter((todo) => todo.checked)} />
+    }
+  ];
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodoTitle(e.target.value);
+  };
+  const onEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(addTodo(newTodoTitle));
+      setNewTodoTitle('');
+    }
+  };
+  return (
+    <StyledComponent
+      tabIndex={tabIndex}
+      contents={tabContents}
+      inputValue={newTodoTitle}
+      onChange={onChange}
+      onEnterKeyPress={onEnterKeyPress}
+    />
+  );
+};
+
+export const Page = Container;

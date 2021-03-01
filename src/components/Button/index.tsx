@@ -1,4 +1,3 @@
-import { Children } from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import { StyledProps } from '../../types';
@@ -6,10 +5,19 @@ import { StyledProps } from '../../types';
 interface Props {
   children?: React.ReactNode;
   imgUrl?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Component: React.VFC<Props & StyledProps> = ({ className, children }) => {
-  return <button className={className}>{children}</button>;
+const Component: React.VFC<Props & StyledProps> = ({
+  className,
+  children,
+  onClick
+}) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 const Button = styled(Component)`
@@ -21,6 +29,7 @@ const Button = styled(Component)`
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
+  // TODO: focus 時の outline を box-shadow に
 `;
 
 export default Button;

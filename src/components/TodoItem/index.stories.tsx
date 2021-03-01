@@ -6,9 +6,9 @@ export default {
 };
 
 export const Unchecked: React.VFC = () => (
-  <TodoItem check={false} title={'Unchecked Todo'} />
+  <TodoItem id={'0'} check={false} title={'Unchecked Todo'} />
 );
 
 export const Checked: React.VFC = () => (
-  <TodoItem check={true} title={'Checked Todo'} />
+  <TodoItem id={'0'} check={true} title={'Checked Todo'} />
 );

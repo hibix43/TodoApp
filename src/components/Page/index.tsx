@@ -51,7 +51,7 @@ const StyledComponent = styled(Component)`
   h1 {
     margin-top: 0;
   }
-  input {
+  &__inner > input {
     height: 3rem;
     width: 30%;
     font-weight: 500;

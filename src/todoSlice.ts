@@ -23,11 +23,27 @@ const slice = createSlice({
         targetTodo.checked = true;
       }
     },
+    changeTitle: (
+      state: State,
+      action: PayloadAction<{ id: string; title: string }>
+    ) => {
+      const targetTodo = state.todos.find(
+        (todo) => todo.id === action.payload.id
+      );
+      if (targetTodo) {
+        targetTodo.title = action.payload.title;
+      }
+    },
     deleteTodo: (state: State, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     }
   }
 });
 
-export const { addTodo, changeChecked, deleteTodo } = slice.actions;
+export const {
+  addTodo,
+  changeChecked,
+  changeTitle,
+  deleteTodo
+} = slice.actions;
 export const todoReducer = slice.reducer;

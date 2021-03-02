@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { StyledProps } from './../../types';
 import Button from '../Button';
-import { changeChecked, deleteTodo } from '../../todoSlice';
+import { changeChecked, changeTitle, deleteTodo } from '../../todoSlice';
 import { useDispatch } from 'react-redux';
+import Input from '../Input';
 
 type Props = {
   check: boolean;
   title: string;
-  onClick: React.MouseEventHandler<HTMLSpanElement>;
-  onDeleteClick: React.MouseEventHandler<HTMLButtonElement>;
+  isModify: boolean;
+  onClickCheck: React.MouseEventHandler<HTMLSpanElement>;
+  onClickModify: React.MouseEventHandler<HTMLButtonElement>;
+  onChangeTitle: React.ChangeEventHandler<HTMLInputElement>;
+  onEnterKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
+  onClickDelete: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const Component: React.VFC<Props & StyledProps> = ({
   className,
   check,
   title,
-  onClick,
-  onDeleteClick
+  isModify,
+  onClickCheck,
+  onClickModify,
+  onChangeTitle,
+  onEnterKeyPress,
+  onClickDelete
 }) => {
   return (
     // clsx で checked と unchecked のどちらかを付与する？ → checked ならボタンが押せない、色を暗くする
     <div className={`${className}`}>
-      <span className={`${className}__main`} onClick={onClick}>
+      <span className={`${className}__main`} onClick={onClickCheck}>
         <Button
           className={`${className}__check`}
           imgUrl={
@@ -31,16 +40,28 @@ const Component: React.VFC<Props & StyledProps> = ({
               : './assets/images/unchecked.svg'
           }
         />
-        <span className={`${className}__title`}>{title}</span>
+        {isModify ? (
+          <Input
+            className={`${className}__title`}
+            value={title}
+            onChange={onChangeTitle}
+            onKeyPress={onEnterKeyPress}
+          />
+        ) : (
+          <span className={`${className}__title`}>{title}</span>
+        )}
       </span>
-      <Button
-        className={`${className}__edit`}
-        imgUrl={'./assets/images/edit.svg'}
-      />
+      {!isModify && (
+        <Button
+          className={`${className}__edit`}
+          imgUrl={'./assets/images/edit.svg'}
+          onClick={onClickModify}
+        />
+      )}
       <Button
         className={`${className}__delete`}
         imgUrl={'./assets/images/delete.svg'}
-        onClick={onDeleteClick}
+        onClick={onClickDelete}
       />
     </div>
   );
@@ -57,6 +78,7 @@ const StyledComponent = styled(Component)`
     margin-right: 0.5rem;
   }
   &__title {
+    width: 100%;
     font-size: 1rem;
     font-weight: bold;
     word-break: break-all;
@@ -79,15 +101,38 @@ type OwterProps = {
 };
 
 const Container: React.VFC<OwterProps> = ({ id, check, title }) => {
+  const [todoTitle, setTodoTitle] = useState(title);
+  const [isModify, setIsModify] = useState(false);
+
   const dispatch = useDispatch();
-  const handleClick = () => dispatch(changeChecked(id));
-  const handleDeleteClick = () => dispatch(deleteTodo(id));
+  const handleClickCheck = () => {
+    if (isModify) return;
+    dispatch(changeChecked(id));
+  };
+  const handleClickDelete = () => dispatch(deleteTodo(id));
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTodoTitle(e.target.value);
+  const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(changeTitle({ id, title: todoTitle }));
+      setIsModify(false);
+    }
+  };
+  const handleClickModify = () => {
+    if (check) return;
+    setIsModify(true);
+  };
+
   return (
     <StyledComponent
       check={check}
-      title={title}
-      onClick={handleClick}
-      onDeleteClick={handleDeleteClick}
+      title={todoTitle}
+      isModify={isModify}
+      onClickCheck={handleClickCheck}
+      onClickModify={handleClickModify}
+      onChangeTitle={handleChangeTitle}
+      onEnterKeyPress={handleEnterKeyPress}
+      onClickDelete={handleClickDelete}
     />
   );
 };

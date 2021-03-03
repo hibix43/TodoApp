@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyledProps, Todo } from '../../types';
 import { TodoItem } from '../TodoItem';
+import { TodoItemEmpty } from '../TodoItem/TodoItemEmpty';
 
 type Props = {
   todos: Todo[];
 };
 
 const Component: React.VFC<Props & StyledProps> = ({ className, todos }) => {
-  // TODO: todos が empty であることを示す
-  return (
+  return todos.length > 0 ? (
     <div className={className}>
       {todos.map((todo) => (
         <TodoItem
@@ -19,6 +19,8 @@ const Component: React.VFC<Props & StyledProps> = ({ className, todos }) => {
         />
       ))}
     </div>
+  ) : (
+    <TodoItemEmpty />
   );
 };
 

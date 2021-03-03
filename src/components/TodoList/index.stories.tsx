@@ -13,3 +13,5 @@ export const Normal: React.VFC = () => (
     ]}
   />
 );
+
+export const Empty: React.VFC = () => <TodoList todos={[]} />;

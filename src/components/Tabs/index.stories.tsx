@@ -1,12 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 import { Tabs } from './index';
 
 export default {
   title: 'Tabs'
 };
 
-export const Normal: React.VFC = () => {
-  return (
+export const Normal: React.VFC = () => (
+  <Provider store={store}>
     <Tabs
       selectedTabId={1}
       contents={[
@@ -32,5 +34,5 @@ export const Normal: React.VFC = () => {
         }
       ]}
     />
-  );
-};
+  </Provider>
+);

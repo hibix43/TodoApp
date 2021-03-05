@@ -9,7 +9,7 @@ export type Todo = {
 };
 
 export type TabContent = {
-  id: number;
+  index: number;
   title: string;
   content: React.ReactNode;
 };

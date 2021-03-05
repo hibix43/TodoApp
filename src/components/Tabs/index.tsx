@@ -17,7 +17,7 @@ const Component: React.VFC<Props & StyledProps> = ({
   return (
     <div className={className}>
       <TabNavigation selectedTabTitle={content.title} tabTitles={tabTitltes} />
-      <TabContent key={content.id}>{content.content}</TabContent>
+      <TabContent key={content.index}>{content.content}</TabContent>
     </div>
   );
 };
@@ -28,13 +28,13 @@ const StyledComponent = styled(Component)`
 `;
 
 type OuterProps = {
-  selectedTabId: number; // TODO: tab をクリックすることで切り替えられるように id を state に持つ
+  selectedTabIndex: number;
   contents: TabContentType[];
 };
 
-const Container: React.VFC<OuterProps> = ({ selectedTabId, contents }) => {
+const Container: React.VFC<OuterProps> = ({ selectedTabIndex, contents }) => {
   const selectedContent = contents.find(
-    (content) => content.id === selectedTabId
+    (content) => content.index === selectedTabIndex
   );
   const tabTitles = contents.map((content) => content.title);
   if (selectedContent) {

@@ -19,7 +19,6 @@ const Component: React.VFC<Props & StyledProps> = ({
 }) => {
   return (
     <div className={className}>
-      {/* TODO: index は仮 */}
       {tabTitles.map((title, index) => (
         <Button
           className={title === selectedTabTitle ? `${className}__selected` : ''}

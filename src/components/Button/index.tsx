@@ -29,7 +29,6 @@ const Button = styled(Component)`
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
-  // TODO: focus 時の outline を box-shadow に
 `;
 
 export default Button;

@@ -31,7 +31,6 @@ const Component: React.VFC<Props & StyledProps> = ({
   return (
     <div className={`${className}`}>
       <span className={`${className}__main`} onClick={onClickCheck}>
-        {/* Buton にする必要もないので main の brefore に画像を渡す */}
         <Button
           className={`${className}__check`}
           imgUrl={

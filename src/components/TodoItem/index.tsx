@@ -29,7 +29,6 @@ const Component: React.VFC<Props & StyledProps> = ({
   onClickDelete
 }) => {
   return (
-    // clsx で checked と unchecked のどちらかを付与する？ → checked ならボタンが押せない、色を暗くする
     <div className={`${className}`}>
       <span className={`${className}__main`} onClick={onClickCheck}>
         <Button

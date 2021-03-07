@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../../store';
 import { addTodo } from '../../todoSlice';
-import { StyledProps, TabContent, Todo } from '../../types';
+import { StyledProps } from '../../types';
 import Input from '../Input';
-import { Tabs } from '../Tabs';
-import { TodoList } from '../TodoList';
+import { TodoListTabs } from '../TodoListTabs';
 
 type Props = {
-  tabIndex: number;
-  contents: TabContent[];
   inputValue: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onEnterKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
@@ -18,8 +14,6 @@ type Props = {
 
 const Component: React.VFC<Props & StyledProps> = ({
   className,
-  tabIndex,
-  contents,
   inputValue,
   onChange,
   onEnterKeyPress
@@ -35,7 +29,7 @@ const Component: React.VFC<Props & StyledProps> = ({
           onChange={onChange}
           onKeyPress={onEnterKeyPress}
         />
-        <Tabs selectedTabId={tabIndex} contents={contents} />
+        <TodoListTabs />
       </div>
     </div>
   );
@@ -65,25 +59,6 @@ const StyledComponent = styled(Component)`
 const Container: React.VFC = () => {
   const dispatch = useDispatch();
   const [newTodoTitle, setNewTodoTitle] = useState('');
-  const todos = useSelector<RootState, Todo[]>((state) => state.todo.todos);
-
-  // <Tabs/> と一緒に TodoListTabs? に切り出したほうがよさそう
-  const tabIndex = useSelector<RootState, number>(
-    (state) => state.tab.currentIndex
-  );
-  const tabContents = [
-    { id: 0, title: 'All', content: <TodoList todos={todos} /> },
-    {
-      id: 1,
-      title: 'Unchecked Todo',
-      content: <TodoList todos={todos.filter((todo) => !todo.checked)} />
-    },
-    {
-      id: 2,
-      title: 'Checked Todo',
-      content: <TodoList todos={todos.filter((todo) => todo.checked)} />
-    }
-  ];
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodoTitle(e.target.value);
@@ -96,8 +71,6 @@ const Container: React.VFC = () => {
   };
   return (
     <StyledComponent
-      tabIndex={tabIndex}
-      contents={tabContents}
       inputValue={newTodoTitle}
       onChange={onChange}
       onEnterKeyPress={onEnterKeyPress}
